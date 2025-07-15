@@ -920,8 +920,7 @@ body {
     object-fit: container;
 }
 .image-placeholder {
-    font-size: 6rem;
-    color: rgba(255, 255, 255, 0.3);
+
     animation: pulse 3s infinite;
 }
 
@@ -1202,7 +1201,7 @@ body {
     font-size: 1.5rem;
     font-weight: 6
 }
-/* Continuation of BankManagement/styles.css */
+
 
 .modal-close {
     background: none;
@@ -1298,7 +1297,6 @@ body {
     display: none !important;
 }
 
-/* Header styles */
 .header {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
@@ -1686,6 +1684,8 @@ body {
 
 /* Sidebar */
 .sidebar {
+    position: relative;
+    right: 250px;
     width: 280px;
     background: white;
     border-right: 1px solid #e2e8f0;
@@ -1733,7 +1733,9 @@ body {
 .menu-item.active {
     background: #f0f7ff;
     color: #1e3c72;
-    border-left-color: #2a5298;
+    border: 3px solid #2a5298;
+    border-radius: 12px;
+
 }
 
 .menu-item i {
@@ -2400,7 +2402,6 @@ body {
     }
 }
 
-/* Authentication Pages Styles */
 .auth-background {
     position: fixed;
     top: 0;
@@ -2877,7 +2878,7 @@ body {
     border-right: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
     animation: slideInLeft 0.6s ease-out;
-    z-index: 10; /* Ensure sidebar is above main content */
+    z-index: 10; 
 }
 
 .sidebar-header {
@@ -2947,15 +2948,15 @@ body {
 .main-dashboard {
     flex: 1;
     padding: 2rem;
-    background: transparent; /* Background handled by dashboard-container */
+    background: transparent; 
     animation: fadeInRight 0.6s ease-out 0.2s both;
-    margin-top: 0; /* Remove margin-top as it's handled by flex layout */
-    position: relative; /* Ensure it respects z-index */
-    z-index: 1; /* Ensure main content is below sidebar if sidebar is fixed */
+    margin-top: 0; 
+    position: relative; 
+    z-index: 1; 
 }
 
 .dashboard-section {
-    display:block; /* Default to block, hidden class will override */
+    display:block; 
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -3078,17 +3079,17 @@ body {
     font-weight: 500;
 }
 
-.transaction-type.consignación { /* Specific style for 'Consignación' */
+.transaction-type.consignación { 
     background: #d1fae5;
     color: #065f46;
 }
 
-.transaction-type.retiro { /* Specific style for 'Retiro' */
+.transaction-type.retiro { 
     background: #fee2e2;
     color: #991b1b;
 }
 
-.transaction-type.pagodeservicios { /* Specific style for 'Pago de servicios' */
+.transaction-type.pagodeservicios { 
     background: #dbeafe;
     color: #1e40af;
 }
@@ -3125,7 +3126,6 @@ body {
     }
 }
 
-/* Responsive Auth Pages */
 @media (max-width: 1024px) {
     .auth-content {
         grid-template-columns: 1fr;
@@ -3182,7 +3182,7 @@ body {
     }
     
     .sidebar {
-        position: relative; /* Change to relative for mobile layout */
+        position: relative; 
         top: auto;
         left: auto;
         height: auto;
@@ -3582,28 +3582,28 @@ body {
 /* Estilos para pantallas muy pequeñas */
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2rem; /* Tamaño de fuente más pequeño */
+        font-size: 2rem; /
     }
 
     .hero-subtitle {
-        font-size: 1rem; /* Tamaño de fuente más pequeño */
+        font-size: 1rem; 
     }
 
     .product-card {
-        padding: 1rem; /* Menos padding en tarjetas de productos */
+        padding: 1rem; 
     }
 
     .service-icon {
-        width: 60px; /* Iconos más pequeños */
+        width: 60px; 
         height: 60px;
     }
 
     .service-icon i {
-        font-size: 1.5rem; /* Tamaño de icono más pequeño */
+        font-size: 1.5rem; 
     }
 
     .modal-content {
-        width: 95%; /* Modal más ancho en pantallas pequeñas */
+        width: 95%;
     }
     img {
         max-width: 100%;
@@ -3614,7 +3614,7 @@ body {
 /* Estilos para pantallas medianas */
 @media (max-width: 1024px) {
     .hero-content {
-        grid-template-columns: 1fr; /* Una sola columna */
+        grid-template-columns: 1fr; 
     }
 
     .products-grid {
@@ -3627,7 +3627,7 @@ body {
 
     .about-content,
     .contact-content {
-        grid-template-columns: 1fr; /* Una sola columna */
+        grid-template-columns: 1fr;
     }
 }
 
