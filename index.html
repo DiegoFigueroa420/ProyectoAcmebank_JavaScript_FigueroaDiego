@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Acme - Tu Futuro Financiero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="" class="nav-logo">
+                <img src="./Img/LOGO.jpg" alt="" class="img-logo">
+            </a>
+            
+            <div class="nav-menu">
+                <a href="#productos" class="nav-link">Productos</a>
+                <a href="#servicios" class="nav-link">Servicios</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn-login" onclick="showLoginModal()">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Iniciar Sesión
+                </button>
+                <button class="nav-toggle" onclick="toggleMobileMenu()">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    El futuro de la <span class="gradient-text">banca digital</span> está aquí
+                </h1>
+                <p class="hero-subtitle">
+                    Descubre una nueva forma de manejar tus finanzas con nuestra plataforma innovadora. 
+                    Seguridad, comodidad y tecnología de vanguardia al alcance de tus manos.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-hero" onclick="showLoginModal()">
+                        <i class="bi bi-rocket-fill"></i>
+                        Comenzar Ahora
+                    </button>
+                    <button class="btn btn-secondary btn-hero" onclick="scrollToProducts()">
+                        <i class="bi bi-play-fill"></i>
+                        Ver Productos
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Clientes Satisfechos</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Tiempo de Actividad</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Soporte Técnico</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-interface">
+                            <div class="app-header">
+                                <div class="app-title">Mi Banco</div>
+                                <div class="app-notification">3</div>
+                            </div>
+                            <div class="balance-card">
+                                <div class="balance-label">Saldo Disponible</div>
+                                <div class="balance-amount">$2,450,000</div>
+                                <div class="balance-change">+2.5% este mes</div>
+                            </div>
+                            <div class="quick-actions">
+                                <div class="action-item">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    <span>Depositar</span>
+                                </div>
+                                <div class="action-item">
+                                    <i class="bi bi-dash-circle-fill"></i>
+                                    <span>Retirar</span>
+                                </div>
+                                <div class="action-item">
+                                    <i class="bi bi-arrow-left-right"></i>
+                                    <span>Transferir</span>
+                                </div>
+                                <div class="action-item">
+                                    <i class="bi bi-receipt-cutoff"></i>
+                                    <span>Pagar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="floating-cards">
+                    <div class="floating-card card-1">
+                        <i class="bi bi-shield-fill-check"></i>
+                        <span>100% Seguro</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="bi bi-lightning-fill"></i>
+                        <span>Transferencias Instantáneas</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="bi bi-phone-fill"></i>
+                        <span>App Móvil</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productos" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Productos</h2>
+                <p class="section-subtitle">
+                    Diseñados para adaptarse a todas tus necesidades financieras
+                </p>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-icon">
+                        <i class="bi bi-wallet-fill"></i>
+                    </div>
+                    <h3>Cuenta de Ahorros</h3>
+                    <p>La cuenta perfecta para comenzar a ahorrar con beneficios exclusivos y sin comisiones de manejo.</p>
+                    <ul class="product-features">
+                        <li><i class="bi bi-check-circle-fill"></i> Sin cuota de manejo</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Retiros gratuitos</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Banca digital 24/7</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Tarjeta débito incluida</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="showLoginModal()">
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                        Abrir Cuenta
+                    </button>
+                </div>
+                
+                <div class="product-card featured">
+                    <div class="product-badge">Más Popular</div>
+                    <div class="product-icon">
+                        <i class="bi bi-credit-card-fill"></i>
+                    </div>
+                    <h3>Cuenta Corriente Premium</h3>
+                    <p>Ideal para personas que manejan múltiples transacciones con beneficios premium y atención personalizada.</p>
+                    <ul class="product-features">
+                        <li><i class="bi bi-check-circle-fill"></i> Transacciones ilimitadas</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Asesor financiero personal</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Tarjeta de crédito sin cuota</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Seguros incluidos</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="showLoginModal()">
+                        <i class="bi bi-star-fill"></i>
+                        Elegir Premium
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-icon">
+                        <i class="bi bi-building-fill"></i>
+                    </div>
+                    <h3>Cuenta Empresarial</h3>
+                    <p>Soluciones completas para empresas con herramientas de gestión financiera avanzadas.</p>
+                    <ul class="product-features">
+                        <li><i class="bi bi-check-circle-fill"></i> Múltiples usuarios</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Nómina electrónica</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Facturación integrada</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Reportes detallados</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="showLoginModal()">
+                        <i class="bi bi-info-circle-fill"></i>
+                        Conocer Más
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Servicios Digitales</h2>
+                <p class="section-subtitle">
+                    Todo lo que necesitas para manejar tus finanzas desde cualquier lugar
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="bi bi-phone-fill"></i>
+                    </div>
+                    <h3>Banca Móvil</h3>
+                    <p>Accede a tu cuenta desde cualquier lugar con nuestra app móvil segura y fácil de usar.</p>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="bi bi-arrow-left-right"></i>
+                    </div>
+                    <h3>Transferencias</h3>
+                    <p>Transfiere dinero de forma instantánea a cualquier banco del país las 24 horas del día.</p>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="bi bi-receipt-cutoff"></i>
+                    </div>
+                    <h3>Pago de Servicios</h3>
+                    <p>Paga todos tus servicios públicos desde la comodidad de tu hogar sin comisiones.</p>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h3>Inversiones</h3>
+                    <p>Haz crecer tu dinero con nuestras opciones de inversión seguras y rentables.</p>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="bi bi-shield-fill-check"></i>
+                    </div>
+                    <h3>Seguridad</h3>
+                    <p>Protección avanzada con encriptación de grado militar y autenticación biométrica.</p>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Atención al cliente especializada disponible todos los días del año.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>¿Por qué elegir Banco Acme?</h2>
+                    <p>
+                        Somos más que un banco, somos tu aliado financiero. Con más de 20 años de experiencia 
+                        en el sector financiero, hemos evolucionado para ofrecerte la mejor experiencia bancaria digital.
+                    </p>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="bi bi-award-fill"></i>
+                            <div>
+                                <h4>Experiencia Comprobada</h4>
+                                <p>Más de 20 años siendo el banco de confianza de miles de familias colombianas.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="bi bi-rocket-fill"></i>
+                            <div>
+                                <h4>Innovación Constante</h4>
+                                <p>Tecnología de vanguardia que se adapta a tus necesidades en constante evolución.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="bi bi-people-fill"></i>
+                            <div>
+                                <h4>Atención Personalizada</h4>
+                                <p>Cada cliente es único, por eso ofrecemos soluciones personalizadas para ti.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-visual">
+                    <div class="about-image">
+                        <div class="image-placeholder">
+                            <img src="./Img/Imagen-banco.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Contáctanos</h2>
+                    <p>
+                        Estamos aquí para ayudarte. Ponte en contacto con nosotros y nuestro equipo 
+                        te brindará la mejor atención.
+                    </p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="bi bi-telephone-fill"></i>
+                            <div>
+                                <h4>Teléfono</h4>
+                                <p>+57 (1) 234-5678</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="bi bi-envelope-fill"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>info@bancoacme.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <div>
+                                <h4>Dirección</h4>
+                                <p>Calle 100 #15-25, Cúcuta, Colombia</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="bi bi-clock-fill"></i>
+                            <div>
+                                <h4>Horario</h4>
+                                <p>Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Envíanos un mensaje</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre completo</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Asunto</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Selecciona un asunto</option>
+                                <option value="cuenta">Información sobre cuentas</option>
+                                <option value="credito">Productos de crédito</option>
+                                <option value="soporte">Soporte técnico</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-paper-plane"></i>
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="nav-logo">
+                        <img src="./Img/LOGO.jpg" alt="" class="img-logo">
+                        <span>Banco Acme</span>
+                    </div>
+                    <p>Tu futuro financiero comienza aquí. Banco Acme, más que un banco, tu aliado de confianza.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Productos</h4>
+                    <ul>
+                        <li><a href="#">Cuenta de Ahorros</a></li>
+                        <li><a href="#">Cuenta Corriente</a></li>
+                        <li><a href="#">Cuenta Empresarial</a></li>
+                        <li><a href="#">Tarjetas de Crédito</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="#">Banca Móvil</a></li>
+                        <li><a href="#">Transferencias</a></li>
+                        <li><a href="#">Pago de Servicios</a></li>
+                        <li><a href="#">Inversiones</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                        <li><a href="#">Contáctanos</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Banco Acme. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Iniciar Sesión</h2>
+                <button class="modal-close" onclick="closeLoginModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="idType">Tipo de Identificación</label>
+                        <select id="idType" name="idType" required>
+                            <option value="">Seleccione...</option>
+                            <option value="cedula">Cédula de Ciudadanía</option>
+                            <option value="cedula-extranjeria">Cédula de Extranjería</option>
+                            <option value="pasaporte">Pasaporte</option>
+                            <option value="tarjeta-identidad">Tarjeta de Identidad</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="idNumber">Número de Identificación</label>
+                        <input type="text" id="idNumber" name="idNumber" placeholder="Número de identificación" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalPassword">Contraseña</label>
+                        <div class="password-input">
+                            <input type="password" id="modalPassword" name="password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('modalPassword')">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Iniciar Sesión
+                    </button>
+                </form>
+                
+                <div id="loginMessage" class="message hidden"></div>
+                
+                <div class="modal-footer">
+                    <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+                    <p>¿Olvidaste tu contraseña? <a href="recovery.html">Recuperar contraseña</a></p>
+                </div>
+                <div class="modal-links">
+                    <a href="register.html" class="link">
+                        <i class="bi bi-person-plus-fill"></i>
+                        Crear cuenta
+                    </a>
+                    <a href="recovery.html" class="link">
+                        <i class="bi bi-key-fill"></i>
+                        Olvidé mi contraseña
+                    </a>
+                </div>
+                <div id="modalMessage" class="message hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

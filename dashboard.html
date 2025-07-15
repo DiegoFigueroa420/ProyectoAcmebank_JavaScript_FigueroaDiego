@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Banco Acme - Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="nav-logo">
+        <img src="./Img/LOGO.jpg" alt="" class="img-logo">
+    </div>
+      <div class="user-info">
+        <span id="userWelcome">Bienvenido</span>
+        <button class="btn btn-logout" onclick="bankApp.logout()">
+          <i class="bi bi-box-arrow-right"></i>
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h3>Menú Principal</h3>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#" class="menu-item" data-section="account-summary"><i class="bi bi-graph-up"></i> Resumen de Cuenta</a></li>
+        <li><a href="#" class="menu-item" data-section="account-info"><i class="bi bi-person"></i> Información Personal</a></li>
+        <li><a href="#" class="menu-item" data-section="transactions"><i class="bi bi-clock-history"></i> Historial de Transacciones</a></li>
+        <li><a href="#" class="menu-item" data-section="deposit"><i class="bi bi-plus-circle"></i> Consignación</a></li>
+        <li><a href="#" class="menu-item" data-section="withdrawal"><i class="bi bi-dash-circle"></i> Retiro</a></li>
+        <li><a href="#" class="menu-item" data-section="payments"><i class="bi bi-receipt"></i> Pago de Servicios</a></li>
+        <li><a href="#" class="menu-item" data-section="statement"><i class="bi bi-file-earmark-text"></i> Extracto Bancario</a></li>
+        <li><a href="#" class="menu-item" data-section="certificate"><i class="bi bi-award"></i> Certificado Bancario</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-dashboard">
+      <!-- Section: Resumen de Cuenta -->
+      <section id="account-summary" class="dashboard-section">
+        <h2 class="section-title"><i class="bi bi-graph-up"></i> Resumen de Cuenta</h2>
+        <div class="account-summary">
+          <div class="summary-card">
+            <h3>Saldo Disponible</h3>
+            <div class="amount" id="accountBalance">$0.00</div>
+            <div class="change">+0.0% este mes</div>
+          </div>
+          <div class="summary-card">
+            <h3>Número de Cuenta</h3>
+            <div class="amount" id="accountNumber">---</div>
+            <div class="change">Activa</div>
+          </div>
+          <div class="summary-card">
+            <h3>Titular de Cuenta</h3>
+            <div class="amount" id="accountHolder">---</div>
+            <div class="change">Cliente desde <span id="accountCreated">---</span></div>
+          </div>
+        </div>
+
+        <div class="transactions-container">
+          <div class="transactions-header">
+            <h3>Últimas Transacciones</h3>
+            <button class="btn btn-outline" onclick="printTransactions('summary')">
+              <i class="bi bi-printer"></i> Imprimir Resumen
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="transactions-table" id="transactions-summary-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Referencia</th>
+                  <th>Tipo</th>
+                  <th>Descripción</th>
+                  <th>Monto</th>
+                </tr>
+              </thead>
+              <tbody id="transactionsSummaryTableBody">
+                <tr><td colspan="5" class="no-data">No hay transacciones disponibles.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Información Personal -->
+<section id="account-info" class="dashboard-section hidden">
+  <h2 class="section-title"><i class="bi bi-person"></i> Información Personal</h2>
+  <div class="info-grid">
+      <div class="info-card">
+          <h4><i class="bi bi-card-text"></i> Datos de Identificación</h4>
+          <div class="info-item">
+              <span class="label">Nombre Completo:</span>
+              <span class="value" id="fullName">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Tipo de Identificación:</span>
+              <span class="value" id="accountInfoIdType">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Número de Identificación:</span>
+              <span class="value" id="accountInfoIdNumber">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Género:</span>
+              <span class="value" id="accountInfoGender">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Fecha de Nacimiento:</span>
+              <span class="value" id="accountInfoBirthDate">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Ocupación:</span>
+              <span class="value" id="accountInfoOccupation">---</span>
+          </div>
+      </div>
+
+      <div class="info-card">
+          <h4><i class="bi bi-person-lines-fill"></i> Datos de Contacto</h4>
+          <div class="info-item">
+              <span class="label">Correo Electrónico:</span>
+              <span class="value" id="userEmail">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Teléfono:</span>
+              <span class="value" id="accountInfoPhone">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Dirección:</span>
+              <span class="value" id="accountInfoAddress">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Ciudad:</span>
+              <span class="value" id="accountInfoCity">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">País:</span>
+              <span class="value" id="accountInfoCountry">---</span>
+          </div>
+      </div>
+
+      <div class="info-card">
+          <h4><i class="bi bi-wallet2"></i> Datos de Cuenta</h4>
+          <div class="info-item">
+              <span class="label">Número de Cuenta:</span>
+              <span class="value" id="accountInfoNumber">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Saldo Actual:</span>
+              <span class="value balance" id="accountInfoBalance">$0.00</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Fecha de Creación:</span>
+              <span class="value" id="accountInfoCreated">---</span>
+          </div>
+          <div class="info-item">
+              <span class="label">Estado de Cuenta:</span>
+              <span class="value status active">Activa</span>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- Section: Certificado Bancario -->
+<section id="certificate" class="dashboard-section hidden">
+  <h2 class="section-title"><i class="bi bi-award"></i> Certificado Bancario</h2>
+  <div class="certificate-info">
+      <p>Genera un certificado que valida la existencia de tu cuenta bancaria en Banco Acme.</p>
+      <button class="btn btn-primary" onclick="bankApp.loadCertificate()">
+          <i class="bi bi-file-earmark-arrow-down"></i>
+          Generar Certificado
+      </button>
+  </div>
+  
+  <div id="certificateContent" class="certificate-container hidden">
+      <div class="certificate">
+          <div class="certificate-header">
+            <div class="nav-logo">
+              <img src="./Img/LOGO.jpg" alt="" class="img-logo">
+            </div>
+              <h2 class="certificate-title">CERTIFICADO DE EXISTENCIA DE CUENTA</h2>
+          </div>
+          <div class="certificate-body">
+              <p class="certificate-number"><strong>No. de Certificado:</strong> <span id="certificateNumber">---</span></p>
+              <p class="certificate-text">
+                  El Banco Acme, por medio del presente, certifica que el(la) señor(a)
+                  <strong><span id="certificateHolder">---</span></strong>, identificado(a) con
+                  <span id="certificateIdType">---</span> número <strong><span id="certificateIdNumber">---</span></strong>,
+                  es titular de una cuenta de ahorros (o corriente) activa con el número
+                  <strong><span id="certificateAccountNumber">---</span></strong>.
+              </p>
+              <p class="certificate-text">
+                  La cuenta fue creada el día <strong><span id="certificateAccountDate">---</span></strong>
+                  y se encuentra actualmente activa y en buen estado.
+              </p>
+              <p class="certificate-text">
+                  Este certificado se expide a solicitud del interesado para los fines que considere pertinentes.
+              </p>
+          </div>
+          <div class="certificate-footer">
+              <div class="issue-date">
+                  <p><strong>Fecha de Emisión:</strong> <span id="certificateIssueDate">---</span></p>
+              </div>
+              <div class="certificate-signature">
+                  <div class="signature-line"></div>
+                  <p class="signature-text">Gerencia de Operaciones</p>
+                  <p class="signature-text">Banco Acme</p>
+              </div>
+          </div>
+      </div>
+      <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 1rem;">
+          <button class="btn btn-outline" onclick="printCertificate()">
+              <i class="bi bi-printer"></i> Imprimir Certificado
+          </button>
+      </div>
+  </div>
+</section>
+
+      <!-- Section: Historial de Transacciones -->
+      <section id="transactions" class="dashboard-section hidden">
+        <h2 class="section-title"><i class="bi bi-clock-history"></i> Historial Completo de Transacciones</h2>
+        <div class="transactions-container">
+          <div class="transactions-header">
+            <h3>Todas las Transacciones</h3>
+            <button class="btn btn-outline" onclick="printTransactions('full')">
+              <i class="bi bi-printer"></i> Imprimir Historial
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="transactions-table" id="transactions-full-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Referencia</th>
+                  <th>Tipo</th>
+                  <th>Descripción</th>
+                  <th>Monto</th>
+                </tr>
+              </thead>
+              <tbody id="transactionsFullTableBody">
+                <tr><td colspan="5" class="no-data">Cargando transacciones...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Consignación -->
+      <section id="deposit" class="dashboard-section hidden">
+        <h2 class="section-title"><i class="bi bi-plus-circle"></i> Consignación Electrónica</h2>
+        <div class="transaction-form">
+          <div class="user-account-info">
+            <p><strong>Número de Cuenta:</strong> <span id="depositAccountNumber">---</span></p>
+            <p><strong>Titular:</strong> <span id="depositAccountHolder">---</span></p>
+          </div>
+          <form id="depositForm">
+            <div class="form-group">
+              <label for="depositAmount">Monto a Consignar</label>
+              <div class="amount-input">
+                <span class="currency">$</span>
+                <input type="number" id="depositAmount" name="depositAmount" placeholder="Ej: 100000.00" step="0.01" min="0.01" required>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i>
+                Realizar Consignación
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Section: Retiro -->
+      <section id="withdrawal" class="dashboard-section hidden">
+        <h2 class="section-title"><i class="bi bi-dash-circle"></i> Retiro de Dinero</h2>
+        <div class="transaction-form">
+          <div class="user-account-info">
+            <p><strong>Número de Cuenta:</strong> <span id="withdrawalAccountNumber">---</span></p>
+            <p><strong>Titular:</strong> <span id="withdrawalAccountHolder">---</span></p>
+          </div>
+          <form id="withdrawalForm">
+            <div class="form-group">
+              <label for="withdrawalAmount">Monto a Retirar</label>
+              <div class="amount-input">
+                <span class="currency">$</span>
+                <input type="number" id="withdrawalAmount" name="withdrawalAmount" placeholder="Ej: 50000.00" step="0.01" min="0.01" required>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i>
+                Realizar Retiro
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Section: Pago de Servicios -->
+      <section id="payments" class="dashboard-section hidden">
+        <h2 class="section-title"><i class="bi bi-receipt"></i> Pago de Servicios Públicos</h2>
+        <div class="transaction-form">
+          <div class="user-account-info">
+            <p><strong>Número de Cuenta:</strong> <span id="paymentsAccountNumber">---</span></p>
+            <p><strong>Titular:</strong> <span id="paymentsAccountHolder">---</span></p>
+          </div>
+          <form id="paymentsForm">
+            <div class="form-group">
+              <label for="serviceType">Tipo de Servicio</label>
+              <select id="serviceType" name="serviceType" required>
+                <option value="">Seleccione un servicio...</option>
+                <option value="energia">Energía</option>
+                <option value="agua">Agua</option>
+                <option value="gas">Gas Natural</option>
+                <option value="internet">Internet</option>
+                <option value="telefono">Teléfono</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="serviceReference">Referencia de Pago</label>
+              <input type="text" id="serviceReference" name="serviceReference" placeholder="Número de referencia de la factura" required>
+            </div>
+            <div class="form-group">
+              <label for="paymentAmount">Monto a Pagar</label>
+              <div class="amount-input">
+                <span class="currency">$</span>
+                <input type="number" id="paymentAmount" name="paymentAmount" placeholder="Ej: 75000.00" step="0.01" min="0.01" required>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i>
+                Realizar Pago
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Section: Extracto Bancario -->
+      <section id="statement" class="dashboard-section hidden">
+        <h2 class="section-title"><i class="bi bi-file-earmark-text"></i> Extracto Bancario</h2>
+        <div class="transaction-form">
+          <div class="user-account-info">
+            <p><strong>Número de Cuenta:</strong> <span id="statementAccountNumber">---</span></p>
+            <p><strong>Titular:</strong> <span id="statementAccountHolder">---</span></p>
+          </div>
+          <form id="statementForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="statementYear">Año</label>
+                <input type="number" id="statementYear" name="statementYear" placeholder="Ej: 2023" min="2000" max="2099" required>
+              </div>
+              <div class="form-group">
+                <label for="statementMonth">Mes</label>
+                <select id="statementMonth" name="statementMonth" required>
+                  <option value="">Seleccione un mes...</option>
+                  <option value="1">Enero</option>
+                  <option value="2">Febrero</option>
+                  <option value="3">Marzo</option>
+                  <option value="4">Abril</option>
+                  <option value="5">Mayo</option>
+                  <option value="6">Junio</option>
+                  <option value="7">Julio</option>
+                  <option value="8">Agosto</option>
+                  <option value="9">Septiembre</option>
+                  <option value="10">Octubre</option>
+                  <option value="11">Noviembre</option>
+                  <option value="12">Diciembre</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i>
+                Generar Extracto
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="statementResult" class="transactions-container hidden">
+          <div class="transactions-header">
+            <h3>Movimientos del Período</h3>
+            <button class="btn btn-outline" onclick="printTransactions('statement')">
+              <i class="bi bi-printer"></i> Imprimir Extracto
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="transactions-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Referencia</th>
+                  <th>Tipo</th>
+                  <th>Descripción</th>
+                  <th>Monto</th>
+                </tr>
+              </thead>
+              <tbody id="statementTableBody">
+                <tr><td colspan="5" class="no-data">Genera un extracto para ver los movimientos.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Transaction Summary Details (Hidden by default) -->
+      <div id="transaction-summary-details" class="message success hidden">
+        <h3>Resumen de Transacción</h3>
+        <p><strong>Fecha:</strong> <span id="summaryTxnDate"></span></p>
+        <p><strong>Referencia:</strong> <span id="summaryTxnReference"></span></p>
+        <p><strong>Tipo:</strong> <span id="summaryTxnType"></span></p>
+        <p><strong>Descripción:</strong> <span id="summaryTxnDescription"></span></p>
+        <p><strong>Monto:</strong> <span id="summaryTxnAmount"></span></p>
+        <button class="btn btn-primary" onclick="document.getElementById('transaction-summary-details').classList.add('hidden')">Cerrar</button>
+      </div>
+
+      <div id="dashboardMessage" class="message hidden"></div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
