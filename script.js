@@ -355,7 +355,7 @@ class BankApp {
                 }
 
                 document.getElementById('newPasswordForm').classList.add('hidden');
-                this.recoveryUser = null; // Clear temporary user
+                this.recoveryUser = null; 
             }
         }
     }
@@ -364,7 +364,6 @@ class BankApp {
     initDashboard() {
         const currentUserData = localStorage.getItem('currentUser');
         if (!currentUserData) {
-            // Redirect to login if no user is logged in
             window.location.href = 'index.html';
             return;
         }
@@ -522,7 +521,6 @@ class BankApp {
         document.getElementById('accountInfoNumber').textContent = account.accountNumber;
         document.getElementById('accountInfoBalance').textContent = this.formatCurrency(account.balance);
         document.getElementById('accountInfoCreated').textContent = this.formatDate(account.createdDate);
-        // Status is static in HTML, but could be dynamic if needed
     }
 
     loadTransactions(scope = 'summary') {
@@ -740,8 +738,7 @@ class BankApp {
         const filteredTransactions = this.transactions
             .filter(t => {
                 const transactionDate = new Date(t.date);
-                return t.accountNumber === account.accountNumber &&
-                       transactionDate.getFullYear() === year &&
+                return t.accountNumber === account.accountNumber && transactionDate.getFullYear() === year &&
                        transactionDate.getMonth() === (month - 1); // Month is 0-11 in Date object
             })
             .sort((a, b) => new Date(b.date) - new Date(a.date));

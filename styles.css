@@ -3553,6 +3553,11 @@ body {
 
 /* Estilos para pantallas pequeñas */
 @media (max-width: 768px) {
+    /* Sidebar */
+    .sidebar {
+    position: relative;
+    left: 1px;
+    }
     .navbar {
         flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
     }
@@ -3581,6 +3586,10 @@ body {
 
 /* Estilos para pantallas muy pequeñas */
 @media (max-width: 480px) {
+    .sidebar {
+        position: relative;
+        left: 1px;
+        }
     .hero-title {
         font-size: 2rem; /
     }
@@ -3612,7 +3621,11 @@ body {
 }
 
 /* Estilos para pantallas medianas */
-@media (max-width: 1024px) {
+@media (max-width: 1284px) {
+    .sidebar {
+        position: relative;
+        left: 1px;
+        }
     .hero-content {
         grid-template-columns: 1fr; 
     }
