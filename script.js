@@ -1,3 +1,4 @@
+
 class BankApp {
     constructor() {
         this.currentUser = null;
@@ -5,13 +6,20 @@ class BankApp {
         this.accounts = this.loadFromStorage('bankAccounts', []);
         this.transactions = this.loadFromStorage('bankTransactions', []);
         this.recoveryUser = null; // Used for password recovery process
+        this.initTheme();
         this.init();
+    }
+
+    initTheme() {
+        // Load theme from localStorage or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
     }
 
     init() {
         const path = window.location.pathname;
         const page = path.split('/').pop() || 'index.html';
-        
+
         switch (page) {
             case 'index.html':
             case '':
@@ -79,11 +87,11 @@ class BankApp {
     showMessage(elementId, message, type = 'info') {
         const element = document.getElementById(elementId);
         if (!element) return;
-        
+
         element.textContent = message;
         element.className = `message ${type}`;
         element.classList.remove('hidden');
-        
+
         // Hide message after 5 seconds
         setTimeout(() => {
             element.classList.add('hidden');
@@ -188,32 +196,35 @@ class BankApp {
     handleRegister(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-        
+
         const userData = {
             idType: formData.get('regIdType'),
             idNumber: formData.get('regIdNumber'),
             firstName: formData.get('firstName'),
             lastName: formData.get('lastName'),
-            gender: formData.get('gender'),
             phone: formData.get('phone'),
             birthDate: formData.get('birthDate'),
-            occupation: formData.get('occupation'),
             email: formData.get('email'),
             address: formData.get('address'),
             city: formData.get('city'),
             country: formData.get('country'),
-            monthlyIncome: parseFloat(formData.get('monthlyIncome')), // Parse to number
-            incomeSource: formData.get('incomeSource'),
             password: formData.get('password')
         };
 
+        const confirmPassword = formData.get('confirmPassword');
+
         // Validation
         for (const [key, value] of Object.entries(userData)) {
-            // Check for empty strings or NaN for monthlyIncome
-            if (!value || (typeof value === 'string' && value.trim() === '') || (key === 'monthlyIncome' && isNaN(value))) {
+            if (!value || (typeof value === 'string' && value.trim() === '')) {
                 this.showMessage('registerMessage', 'Todos los campos son obligatorios.', 'error');
                 return;
             }
+        }
+
+        // Password confirmation validation
+        if (userData.password !== confirmPassword) {
+            this.showMessage('registerMessage', 'Las contraseñas no coinciden.', 'error');
+            return;
         }
 
         // Check if user already exists by ID
@@ -285,11 +296,11 @@ class BankApp {
     initRecovery() {
         const recoveryForm = document.getElementById('recoveryForm');
         const newPasswordForm = document.getElementById('newPasswordForm');
-        
+
         if (recoveryForm) {
             recoveryForm.addEventListener('submit', (e) => this.handleRecovery(e));
         }
-        
+
         if (newPasswordForm) {
             newPasswordForm.addEventListener('submit', (e) => this.handleNewPassword(e));
         }
@@ -298,7 +309,7 @@ class BankApp {
     handleRecovery(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-        
+
         const recoveryData = {
             idType: formData.get('recoveryIdType'),
             idNumber: formData.get('recoveryIdNumber'),
@@ -379,6 +390,7 @@ class BankApp {
         this.setupDashboard();
         this.setupMenuNavigation();
         this.setupTransactionForms();
+        this.initializeCreditCardColors();
         // Initial load of sections
         this.showSection('account-summary');
         // Set active menu item for initial section
@@ -394,11 +406,11 @@ class BankApp {
         // Setup user info in account-info section
         const fullNameElement = document.getElementById('fullName');
         const userEmailElement = document.getElementById('userEmail');
-        
+
         if (fullNameElement) {
             fullNameElement.textContent = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
         }
-        
+
         if (userEmailElement) {
             userEmailElement.textContent = this.currentUser.email;
         }
@@ -410,7 +422,7 @@ class BankApp {
                 e.preventDefault();
                 const section = item.getAttribute('data-section');
                 this.showSection(section);
-                
+
                 // Update active menu item
                 document.querySelectorAll('.menu-item').forEach(menuItem => {
                     menuItem.classList.remove('active');
@@ -460,6 +472,9 @@ class BankApp {
                 break;
             case 'certificate':
                 this.loadCertificate();
+                break;
+            case 'credit-card':
+                this.loadCreditCard();
                 break;
         }
     }
@@ -556,7 +571,7 @@ class BankApp {
 
     setupTransactionForms() {
         const formTypes = ['deposit', 'withdrawal', 'payments', 'statement'];
-        
+
         formTypes.forEach(type => {
             const form = document.getElementById(type + 'Form');
             if (form) {
@@ -598,7 +613,7 @@ class BankApp {
         // Update account balance
         const accountIndex = this.accounts.findIndex(a => a.accountNumber === account.accountNumber);
         this.accounts[accountIndex].balance += amount;
-        
+
         this.transactions.push(transaction);
         this.saveData();
 
@@ -643,7 +658,7 @@ class BankApp {
         // Update account balance
         const accountIndex = this.accounts.findIndex(a => a.accountNumber === account.accountNumber);
         this.accounts[accountIndex].balance -= amount;
-        
+
         this.transactions.push(transaction);
         this.saveData();
 
@@ -702,7 +717,7 @@ class BankApp {
         // Update account balance
         const accountIndex = this.accounts.findIndex(a => a.accountNumber === account.accountNumber);
         this.accounts[accountIndex].balance -= amount;
-        
+
         this.transactions.push(transaction);
         this.saveData();
 
@@ -745,7 +760,7 @@ class BankApp {
 
         const statementTableBody = document.getElementById('statementTableBody');
         const statementResult = document.getElementById('statementResult');
-        
+
         if (statementTableBody) {
             if (filteredTransactions.length === 0) {
                 statementTableBody.innerHTML = '<tr><td colspan="5" class="no-data">No hay transacciones para el período seleccionado</td></tr>';
@@ -766,6 +781,7 @@ class BankApp {
             statementResult.classList.remove('hidden');
         }
     }
+
     loadCertificate() {
         const account = this.accounts.find(a => a.userId === this.currentUser.id);
         if (!account) {
@@ -775,7 +791,7 @@ class BankApp {
 
         const certificateNumber = 'CERT-' + Date.now();
         const currentDate = new Date();
-        
+
         const idTypeNames = {
             cedula: 'Cédula de Ciudadanía',
             'cedula-extranjeria': 'Cédula de Extranjería',
@@ -802,8 +818,51 @@ class BankApp {
         if (elements.certificateAccountDate) elements.certificateAccountDate.textContent = this.formatDate(account.createdDate);
         if (elements.certificateIssueDate) elements.certificateIssueDate.textContent = this.formatDate(currentDate.toISOString());
 
-
         document.getElementById('certificateContent').classList.remove('hidden');
+    }
+
+    loadCreditCard() {
+        const account = this.accounts.find(a => a.userId === this.currentUser.id);
+        if (!account) {
+            this.showMessage('dashboardMessage', 'No se encontró la cuenta del usuario para mostrar la tarjeta.', 'error');
+            return;
+        }
+
+        // Generate credit card number based on account number
+        const cardNumber = '4532 ' + account.accountNumber.slice(2, 6) + ' ' + 
+                          account.accountNumber.slice(6, 10) + ' ' + 
+                          account.accountNumber.slice(10, 14);
+
+        // Generate expiry date (5 years from account creation)
+        const creationDate = new Date(account.createdDate);
+        const expiryDate = new Date(creationDate.getFullYear() + 5, creationDate.getMonth());
+        const expiryString = String(expiryDate.getMonth() + 1).padStart(2, '0') + '/' + 
+                           String(expiryDate.getFullYear()).slice(-2);
+
+        const cardHolderName = `${this.currentUser.firstName} ${this.currentUser.lastName}`.toUpperCase();
+        const maskedCardNumber = '****-****-****-' + cardNumber.slice(-4);
+
+        // Update card display
+        const cardNumberElement = document.getElementById('cardNumber');
+        const cardHolderNameElement = document.getElementById('cardHolderName');
+        const cardExpiryElement = document.getElementById('cardExpiry');
+
+        if (cardNumberElement) cardNumberElement.textContent = cardNumber;
+        if (cardHolderNameElement) cardHolderNameElement.textContent = cardHolderName;
+        if (cardExpiryElement) cardExpiryElement.textContent = expiryString;
+
+        // Update card info section
+        const cardInfoElements = {
+            cardInfoNumber: document.getElementById('cardInfoNumber'),
+            cardInfoHolder: document.getElementById('cardInfoHolder'),
+            cardInfoExpiry: document.getElementById('cardInfoExpiry'),
+            availableCredit: document.getElementById('availableCredit')
+        };
+
+        if (cardInfoElements.cardInfoNumber) cardInfoElements.cardInfoNumber.textContent = maskedCardNumber;
+        if (cardInfoElements.cardInfoHolder) cardInfoElements.cardInfoHolder.textContent = cardHolderName;
+        if (cardInfoElements.cardInfoExpiry) cardInfoElements.cardInfoExpiry.textContent = this.formatDate(expiryDate.toISOString());
+        if (cardInfoElements.availableCredit) cardInfoElements.availableCredit.textContent = this.formatCurrency(5000000); // Fixed credit limit
     }
 
     showTransactionSummary(transaction) {
@@ -827,6 +886,62 @@ class BankApp {
         localStorage.removeItem('currentUser');
         window.location.href = 'index.html';
     }
+
+    initializeCreditCardColors() {
+        const colorOptions = document.querySelectorAll('.color-option');
+        const cardBackground = document.querySelector('.card-background');
+
+        if (!colorOptions.length || !cardBackground) return;
+
+        // Cargar color guardado
+        const savedTheme = localStorage.getItem('creditCardTheme') || 'blue-theme';
+        cardBackground.className = `card-background ${savedTheme}`;
+
+        // Actualizar selector activo
+        colorOptions.forEach(option => {
+            option.classList.remove('active');
+            if (option.dataset.theme === savedTheme) {
+                option.classList.add('active');
+            }
+        });
+
+        // Agregar event listeners para colores
+        colorOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const selectedTheme = this.dataset.theme;
+
+                // Remover clase activa de todas las opciones
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+
+                // Agregar clase activa a la opción seleccionada
+                this.classList.add('active');
+
+                // Cambiar tema de la tarjeta
+                cardBackground.className = `card-background ${selectedTheme}`;
+
+                // Guardar en localStorage
+                localStorage.setItem('creditCardTheme', selectedTheme);
+            });
+        });
+
+        // Setup credit card buttons
+        const blockCardBtn = document.getElementById('blockCardBtn');
+        const configCardBtn = document.getElementById('configCardBtn');
+
+        if (blockCardBtn) {
+            blockCardBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                blockCreditCard();
+            });
+        }
+
+        if (configCardBtn) {
+            configCardBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                configureCreditCard();
+            });
+        }
+    }
 }
 
 function togglePassword(fieldId) {
@@ -835,10 +950,10 @@ function togglePassword(fieldId) {
     const icon = btn.querySelector('i');
     if (field.type === 'password') {
         field.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
+        icon.classList.replace('bi-eye-fill', 'bi-eye-slash-fill');
     } else {
         field.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
+        icon.classList.replace('bi-eye-slash-fill', 'bi-eye-fill');
     }
 }
 
@@ -939,18 +1054,26 @@ function handleContactForm(e) {
 }
 
 function showLoginModal() {
-    document.getElementById('loginModal').classList.add('show');
-    document.body.style.overflow = 'hidden'; 
-}
-function closeLoginModal() {
-    document.getElementById('loginModal').classList.remove('show');
-    document.body.style.overflow = 'auto'; 
-    const loginMessage = document.getElementById('loginMessage');
-    if (loginMessage) {
-        loginMessage.classList.add('hidden');
-        loginMessage.textContent = '';
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
     }
 }
+
+function closeLoginModal() {
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+        const loginMessage = document.getElementById('loginMessage');
+        if (loginMessage) {
+            loginMessage.classList.add('hidden');
+            loginMessage.textContent = '';
+        }
+    }
+}
+
 function toggleMobileMenu() {
     const navMenu = document.querySelector('.nav-menu');
     const navToggle = document.querySelector('.nav-toggle');
@@ -959,27 +1082,136 @@ function toggleMobileMenu() {
         navToggle.classList.toggle('active');
     }
 }
+
 function scrollToProducts() {
     document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Theme Toggle Function
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    // Agregar un efecto de transición suave
+    document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+    setTimeout(() => {
+        document.body.style.transition = '';
+    }, 300);
+}
+
+// Inicializar tema en la carga de la página
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+}
+
+// Llamar a initTheme inmediatamente para evitar parpadeo de tema incorrecto
+initTheme();
+
+// Event listeners setup
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleTheme();
+        });
+    }
+});
+// Credit card functions
+function blockCreditCard() {
+    const confirmation = confirm('¿Está seguro de que desea bloquear su tarjeta de crédito? Esta acción requerirá contactar al banco para desbloquearla.');
+    
+    if (confirmation) {
+        // Simulate blocking the card
+        const blockBtn = document.querySelector('.btn-outline');
+        if (blockBtn) {
+            blockBtn.innerHTML = '<i class="fas fa-lock"></i> Tarjeta Bloqueada';
+            blockBtn.disabled = true;
+            blockBtn.style.backgroundColor = '#dc2626';
+            blockBtn.style.color = 'white';
+            blockBtn.style.borderColor = '#dc2626';
+        }
+        
+        // Show success message
+        if (window.bankApp) {
+            window.bankApp.showMessage('dashboardMessage', 'Tarjeta bloqueada exitosamente. Contacte al banco para desbloquearla.', 'success');
+        } else {
+            alert('Tarjeta bloqueada exitosamente. Contacte al banco para desbloquearla.');
+        }
+    }
+}
+
+function configureCreditCard() {
+    // Show configuration modal or options
+    const configOptions = [
+        'Cambiar límite de crédito',
+        'Configurar notificaciones',
+        'Establecer PIN de seguridad',
+        'Activar/desactivar compras en línea',
+        'Configurar pagos automáticos'
+    ];
+    
+    let optionsText = 'Opciones de configuración disponibles:\n\n';
+    configOptions.forEach((option, index) => {
+        optionsText += `${index + 1}. ${option}\n`;
+    });
+    optionsText += '\nPara realizar cambios, comuníquese con nuestro servicio al cliente.';
+    
+    alert(optionsText);
+}
+
+// Call initTheme immediately to prevent flash of wrong theme
+initTheme();
+
+// Event listeners setup
+document.addEventListener('DOMContentLoaded', () => {
+    window.bankApp = new BankApp();
+
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactForm);
+    }
+
+    // Initialize theme toggle button
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleTheme();
+        });
+    }
+
+    // Setup credit card buttons if they exist
+    const blockCardBtn = document.querySelector('.btn-outline');
+    if (blockCardBtn && blockCardBtn.textContent.includes('Bloquear')) {
+        blockCardBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            blockCreditCard();
+        });
+    }
+
+    const configCardBtn = document.querySelector('.btn-primary[onclick*="Configurar"]');
+    if (configCardBtn) {
+        configCardBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            configureCreditCard();
+        });
+    }
+});
+
+// Modal event listeners
 document.addEventListener('click', e => {
     if (e.target.id === 'loginModal') { 
         closeLoginModal();
     }
 });
+
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         closeLoginModal();
     }
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    window.bankApp = new BankApp();
-    
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContactForm);
-    }
-});
-

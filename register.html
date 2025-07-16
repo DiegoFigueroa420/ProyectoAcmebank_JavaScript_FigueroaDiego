@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -83,28 +84,12 @@
 
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="gender">Género *</label>
-                                    <select id="gender" name="gender" required>
-                                        <option value="">Seleccione...</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="femenino">Femenino</option>
-                                        <option value="otro">Otro</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <label for="phone">Teléfono *</label>
                                     <input type="tel" id="phone" name="phone" placeholder="Número de teléfono" required>
                                 </div>
-                            </div>
-
-                            <div class="form-row">
                                 <div class="form-group">
                                     <label for="birthDate">Fecha de Nacimiento *</label>
                                     <input type="date" id="birthDate" name="birthDate" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="occupation">Ocupación *</label>
-                                    <input type="text" id="occupation" name="occupation" placeholder="Ocupación" required>
                                 </div>
                             </div>
                         </div>
@@ -141,27 +126,6 @@
                         </div>
 
                         <div class="form-section">
-                            <h3>Información Financiera</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="monthlyIncome">Ingresos Mensuales *</label>
-                                    <input type="number" id="monthlyIncome" name="monthlyIncome" placeholder="Ingresos mensuales" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="incomeSource">Fuente de Ingresos *</label>
-                                    <select id="incomeSource" name="incomeSource" required>
-                                        <option value="">Seleccione...</option>
-                                        <option value="empleado">Empleado</option>
-                                        <option value="independiente">Independiente</option>
-                                        <option value="empresario">Empresario</option>
-                                        <option value="pensionado">Pensionado</option>
-                                        <option value="estudiante">Estudiante</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
                             <h3>Seguridad de la Cuenta</h3>
                             <div class="form-group">
                                 <label for="password">Contraseña *</label>
@@ -176,6 +140,16 @@
                                         <i class="bi bi-info-circle"></i>
                                         Mínimo 8 caracteres, incluir mayúsculas, minúsculas, números y símbolos
                                     </small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirmar Contraseña *</label>
+                                <div class="password-input">
+                                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" required>
+                                    <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -240,6 +214,12 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+    <i class="bi bi-sun-fill sun-icon"></i>
+    <i class="bi bi-moon-fill moon-icon"></i>
+  </button>
+
+  <script src="script.js"></script>
 </body>
 </html>
